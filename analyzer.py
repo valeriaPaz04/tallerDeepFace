@@ -88,10 +88,12 @@ def analyze_image(image_path: str | Path) -> list[dict]:
 
 def analyze_from_bytes(image_bytes: bytes) -> tuple[list[dict], str]:
     """Analiza desde bytes — usado por la app web Flask."""
+    if not image_bytes or len(image_bytes) == 0:
+        raise ValueError("La imagen está vacía.")
     nparr = np.frombuffer(image_bytes, np.uint8)
     img   = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
     if img is None:
-        raise ValueError("No se pudo decodificar la imagen.")
+        raise ValueError("No se pudo decodificar la imagen. Verifica que sea JPG/PNG válido.")
 
     tmp_path = os.path.join(tempfile.gettempdir(), "deepface_temp.jpg")
     cv2.imwrite(tmp_path, img)
