@@ -1,7 +1,5 @@
 from flask import Flask, request, jsonify, render_template_string
 from analyzer import analyze_from_bytes
-import traceback
-import json
 
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16 MB máx
@@ -324,6 +322,12 @@ HTML = """<!DOCTYPE html>
   </script>
 </body>
 </html>"""
+
+
+@app.errorhandler(Exception)
+def handle_error(e):
+    code = e.code if hasattr(e, "code") else 500
+    return jsonify({"error": str(e)}), code
 
 
 @app.route("/")

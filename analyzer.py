@@ -54,10 +54,11 @@ def analyze_image(image_path: str | Path) -> list[dict]:
             detector_backend="opencv",
             silent=True,
         )
-        if not results:
-            raise ValueError("No se detectó ningún rostro.")
     except Exception as e:
         raise ValueError(f"Error al analizar la imagen: {str(e)}")
+
+    if not results:
+        raise ValueError("No se detectó ningún rostro.")
 
     faces = []
     for r in results:
