@@ -1,6 +1,5 @@
 ---
 title: DeepFace Analisis Facial
-emoji: u{1F464}
 colorFrom: blue
 colorTo: indigo
 sdk: docker
